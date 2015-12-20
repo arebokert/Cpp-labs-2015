@@ -76,6 +76,7 @@ namespace monetary {
     inline bool _currencyLengthMoreThanMax() {
       throw monetary_error("Currency name may not be longer than three letters.");
     };
+    bool checkComparisonObject(const Money& other, const string& operand);
   };
   std::ostream& operator<<(std::ostream& os, const Money& other);
 }
