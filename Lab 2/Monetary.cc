@@ -43,7 +43,7 @@ Money::Money(const string& currency, const int& unit, const int& centesimal) {
   }
 }
 
-Money& Money::operator=(const Money& other)
+Money Money::operator=(const Money& other) &
 {
   Money tmp(other);
   if ((_currency != "") && (tmp._currency != _currency)) {
@@ -59,7 +59,7 @@ Money& Money::operator=(const Money& other)
   return *this;
 }
 
-Money Money::operator+(const Money& other)
+Money Money::operator+(const Money& other) const
 {
   Money&& tmp{};
   if ((_currency != "") && (other._currency != "") && (other._currency != _currency)) {
@@ -78,7 +78,7 @@ Money Money::operator+(const Money& other)
   return tmp;
 }
 
-bool Money::operator<(const Money& other)
+bool Money::operator<(const Money& other) const
 {
   if ((_currency != "") && (other._currency != "") && (other._currency != _currency)) {
     throw monetary_error("Can not compare two different currencies.");
@@ -88,7 +88,8 @@ bool Money::operator<(const Money& other)
   return temp1 < temp2;
 }
 
-bool Money::operator==(const Money& other) {
+bool Money::operator==(const Money& other) const
+{
   if ((_currency != "") && (other._currency != "") && (other._currency != _currency)) {
     throw monetary_error("Can not compare two different currencies.");
   }
@@ -97,7 +98,8 @@ bool Money::operator==(const Money& other) {
   return temp1 == temp2;
 }
 
-bool Money::operator>(const Money& other) {
+bool Money::operator>(const Money& other) const
+{
   bool one = (*this < other);
   bool two = (*this == other);
   if (one || two) {
@@ -108,13 +110,16 @@ bool Money::operator>(const Money& other) {
   }
 
 }
-bool Money::operator<=(const Money& other) {
+bool Money::operator<=(const Money& other) const
+{
   return !(*this > other);
 }
-bool Money::operator>=(const Money& other) {
+bool Money::operator>=(const Money& other) const
+{
   return !(*this < other);
 }
-bool Money::operator!=(const Money& other) {
+bool Money::operator!=(const Money& other) const
+{
   return !(*this == other);
 }
 

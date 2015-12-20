@@ -29,21 +29,21 @@ namespace monetary {
     Money(const string& currency, const int& unit = 0, const int& centesimal = 0);
 
 
-    Money& operator=(const Money& other);
+    Money operator=(const Money& other) &;
 
-    Money operator+(const Money& other);
+    Money operator+(const Money& other) const;
 
-    bool operator>(const Money& other);
+    bool operator>(const Money& other) const;
 
-    bool operator<(const Money& other);
+    bool operator<(const Money& other) const;
 
-    bool operator<=(const Money& other);
+    bool operator<=(const Money& other) const;
 
-    bool operator>=(const Money& other);
+    bool operator>=(const Money& other) const;
 
-    bool operator==(const Money& other);
+    bool operator==(const Money& other) const;
 
-    bool operator!=(const Money& other);
+    bool operator!=(const Money& other) const;
 
     void swap(Money& other) noexcept {
       std::swap(_currency, other._currency);
