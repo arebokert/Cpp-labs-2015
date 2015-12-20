@@ -4,14 +4,14 @@
 namespace monetary {
   
   class monetary_error : public std::exception
-{
+  {
   using string = std::string;
- public:
- monetary_error(const string m) :msg(m) {}
-  const char* what() { return msg.c_str(); }
- private:
-  string msg;
-};
+  public:
+    monetary_error(const string m) :msg(m) {}
+    const char* what() { return msg.c_str(); }
+  private:
+    string msg;
+  };
   
   class Money
   {
@@ -20,7 +20,7 @@ namespace monetary {
     using string = std::string;
 
 
-  Money() : _currency{ "" }, _unit{ 0 }, _centesimal{ 0 } {};
+    Money() = default;
 
     Money(const int& unit);
 
