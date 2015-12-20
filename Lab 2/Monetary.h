@@ -21,12 +21,12 @@ namespace monetary {
 
 
     Money() = default;
+    
+    Money(const Money& other) = default;
 
     Money(const int& unit, const int& centesimal = 0);
 
     Money(const string& currency, const int& unit = 0, const int& centesimal = 0);
-
-    Money(const Money& other);
 
 
     Money& operator=(const Money& other);

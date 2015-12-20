@@ -43,17 +43,6 @@ Money::Money(const string& currency, const int& unit, const int& centesimal) {
   }
 }
 
-Money::Money(const Money& other) {
-  if (other._currency.empty()) {
-    _currency = "";
-  }
-  else {
-    _currency = other._currency;
-    _unit = other._unit;
-    _centesimal = other._centesimal;
-  }
-}
-
 Money& Money::operator=(const Money& other)
 {
   Money tmp(other);
