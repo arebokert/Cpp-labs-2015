@@ -6,17 +6,6 @@
 
 using namespace monetary;
 
-Money::Money(const int& unit) {
-  if (unit < 0) {
-    _unitLessThanZero();
-  }
-  else {
-    _unit = unit;
-    _centesimal = 0;
-    _currency = "";
-  }
-}
-
 Money::Money(const int& unit, const int& centesimal) {
   if (unit < 0) {
     _unitLessThanZero();
@@ -31,31 +20,6 @@ Money::Money(const int& unit, const int& centesimal) {
     _centesimal = centesimal;
     _unit = unit;
     _currency = "";
-  }
-}
-
-Money::Money(const string& currency) {
-  if (currency.length() > 3) {
-    _currencyLengthMoreThanMax();
-  }
-  else {
-    _currency = currency;
-    _unit = 0;
-    _centesimal = 0;
-  }
-}
-
-Money::Money(const string& currency, const int& unit) {
-  if (currency.length() > 3) {
-    _currencyLengthMoreThanMax();
-  }
-  else if (unit < 0) {
-    _unitLessThanZero();
-  }
-  else {
-    _currency = currency;
-    _unit = unit;
-    _centesimal = 0;
   }
 }
 

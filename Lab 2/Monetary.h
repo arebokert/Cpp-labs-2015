@@ -22,15 +22,9 @@ namespace monetary {
 
     Money() = default;
 
-    Money(const int& unit);
+    Money(const int& unit, const int& centesimal = 0);
 
-    Money(const int& unit, const int& centesimal);
-
-    Money(const string& currency);
-
-    Money(const string& currency, const int& unit);
-
-    Money(const string& currency, const int& unit, const int& centesimal);
+    Money(const string& currency, const int& unit = 0, const int& centesimal = 0);
 
     Money(const Money& other);
 
