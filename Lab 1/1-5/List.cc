@@ -4,20 +4,18 @@
 
 using namespace std;
 
-struct List::List_Node {
-  string name;
-  int age;
-  List_Node* next;
-};
 
+void swap (List_Node* first, List_Node* second){
+  std::swap(first, second);
+}
 
-List List::copy() {
-  List list;
+List_Node* copy(const List_Node* _head) {
+  List_Node* list;
   if (_head == nullptr)
-    list._head = nullptr;
+    list = nullptr;
   else {
-    list._head = new List_Node{ _head->name, _head->age, nullptr };
-    List_Node* iterator = list._head;
+    list = new List_Node{ _head->name, _head->age, nullptr };
+    List_Node* iterator = list;
     for (List_Node* temp_head = _head->next; temp_head != nullptr; temp_head = temp_head->next) {
       iterator->next = new List_Node{ temp_head->name, temp_head->age, nullptr };
       iterator = iterator->next;
@@ -26,17 +24,18 @@ List List::copy() {
   return list;
 }
 
-void List::append(const string& name, int age)
+void append(List_Node* _head, const string& name, int age)
 {
-  auto p = new List_Node{ name, age, nullptr };
-
+  auto* p = new List_Node{ name, age, nullptr };
   if (_head == nullptr)
     {
       _head = p;
+      cout << _head->name;
+      //cout << _head->name;
       return;
     }
 
-  auto last = _head;
+  auto* last = _head;
 
   while (last->next != nullptr)
     {
@@ -46,29 +45,36 @@ void List::append(const string& name, int age)
   last->next = p;
 }
 
-void List::print()
+void print(const List_Node* _head, ostream& stream)
 {
   for (auto p = _head; p != nullptr; p = p->next)
     {
-      cout << " -> " << p->name << '(' << p->age << ')';
+      stream << " -> " << p->name << '(' << p->age << ')';
+      //cout << " -> " << p->name << '(' << p->age << ')';
     }
-  cout << "\n";
+  stream << "\n";
 }
 
-void List::_internal_reverse_print(const List_Node* node) {
+/*
+void _internal_reverse_print(const List_Node* node) {
   if (node == nullptr) {
     return;
   }
   _internal_reverse_print(node->next);
   cout << " -> " << node->name << '(' << node->age << ')';
 }
+*/
 
-void List::print_reversed() {
-  _internal_reverse_print(_head);
-  cout << "\n";
+void print_reversed(const List_Node* _head, ostream& stream) {
+  if (_head == nullptr) {
+    return;
+  }
+  print_reversed(_head->next, stream);
+  stream << " -> " << _head->name << '(' << _head->age << ')';
+  //cout << "\n";
 }
 
-void List::insert(const string& name, int age) {
+void insert(List_Node* _head, const string& name, int age) {
   if (_head == nullptr)
     {
       auto p = new List_Node{ name, age, nullptr };
@@ -81,7 +87,7 @@ void List::insert(const string& name, int age) {
   }
 }
 
-void List::clear() {
+void clear(List_Node* _head) {
   while(_head != nullptr)
     {
       List_Node* temp = _head->next;
@@ -90,7 +96,7 @@ void List::clear() {
     }
 }
 
-void List::reverse() {
+void reverse(List_Node* _head) {
   struct List_Node* previous_node = nullptr;
   struct List_Node* temp_head = _head;
   struct List_Node* next_node;
@@ -104,7 +110,7 @@ void List::reverse() {
   _head = previous_node;
 }
 
-bool List::empty() const {
+bool empty(const List_Node* _head) {
   if (_head == nullptr) {
     return true;
   }
