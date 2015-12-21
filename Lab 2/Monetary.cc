@@ -135,18 +135,7 @@ bool Money::operator!=(const Money& other) const
 
 std::ostream& monetary::operator<<(std::ostream& os, const Money& other)
 {
-  if (other._centesimal < 10 && other._currency.empty()) {
-    os << other._unit << "." << "0" << other._centesimal;
-  }
-  else if (other._centesimal < 10 && !other._currency.empty()) {
-    os << other._currency << " " << other._unit << "." << "0" << other._centesimal;
-  }
-  else if (other._currency.empty()) {
-    os << other._unit << "." << other._centesimal;
-  }
-  else if (!other._currency.empty()) {
-    os << other._currency << " " << other._unit << "." << other._centesimal;
-  }
+  other.print(os);
   return os;
 }
 
@@ -162,7 +151,7 @@ Money& Money::operator++() {
   return *this;
 }
 
-void Money::print(std::ostream& os) {
+void Money::print(std::ostream& os) const{
   if (_centesimal < 10 && _currency.empty()) {
     os << _unit << "." << "0" << _centesimal;
   }

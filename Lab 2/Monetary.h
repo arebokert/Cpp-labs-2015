@@ -51,11 +51,11 @@ namespace monetary {
       std::swap(_centesimal, other._centesimal);
     };
 
-    friend std::ostream& operator<<(std::ostream& os, const Money& other);
+    //std::ostream& operator<<(std::ostream& os, const Money& other);
     Money& operator++();
     Money operator++(int);
 
-    void print(std::ostream& os);
+    void print(std::ostream& os) const;
 
     string currency() const;
 
