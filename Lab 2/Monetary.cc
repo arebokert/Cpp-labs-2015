@@ -43,7 +43,7 @@ Money::Money(const string& currency, const int& unit, const int& centesimal) {
   }
 }
 
-bool Money::checkComparisonObject(const Money& other, const string& operand){
+bool Money::checkComparisonObject(const Money& other, const string& operand) const{
   Money tmp{other};
   if ((_currency != "") && (tmp._currency != _currency) && (operand == "=")) {
     throw monetary_error("Cannot assign different currency money objects to eachother.");
@@ -57,11 +57,7 @@ bool Money::checkComparisonObject(const Money& other, const string& operand){
     throw monetary_error("Result of adding two money objects cannot be less than zero.");
     return false;
   }
-  else if ((_currency != "") && (other._currency != "") && (other._currency != _currency) && (operand == "<")) {
-    throw monetary_error("Can not compare two different currencies.");
-    return false;
-  }
-  else if ((_currency != "") && (other._currency != "") && (other._currency != _currency) && (operand == "==")) {
+  else if ((_currency != "") && (other._currency != "") && (other._currency != _currency) && ((operand == "<") || (operand == "==")) ) {
     throw monetary_error("Can not compare two different currencies.");
     return false;
   }
@@ -70,7 +66,11 @@ bool Money::checkComparisonObject(const Money& other, const string& operand){
   }
 }
 
-Money Money::operator=(const Money& other) &
+double Money::convertMoneyToSingle(const Money& other) const{
+  return (double)other._unit + ((double)other._unit / 100); 
+}
+
+Money Money::operator=(const Money& other) &  
 {
   Money tmp{other};
   if (!checkComparisonObject(other, "=")) {
@@ -88,39 +88,31 @@ Money Money::operator=(const Money& other) &
 Money Money::operator+(const Money& other) const
 {
   Money tmp{};
-  if ((_currency != "") && (other._currency != "") && (other._currency != _currency)) {
-    throw monetary_error("Cannot add different currency money objects to eachother.");
+  if(checkComparisonObject(other, "+")){
+    tmp._unit = _unit + other._unit;
+    tmp._centesimal = _centesimal + other._centesimal;
+    if (tmp._centesimal >= 100) {
+      tmp._unit++;
+      tmp._centesimal -= 100;
+    }
+    tmp._currency = _currency;
   }
-  else if ((_unit + other._unit < 0) || (_centesimal + other._centesimal < 0)) {
-    throw monetary_error("Result of adding two money objects cannot be less than zero.");
-  }
-  tmp._unit = _unit + other._unit;
-  tmp._centesimal = _centesimal + other._centesimal;
-  if (tmp._centesimal >= 100) {
-    tmp._unit++;
-    tmp._centesimal -= 100;
-  }
-  tmp._currency = _currency;
   return tmp;
 }
 
 bool Money::operator<(const Money& other) const
 {
-  if ((_currency != "") && (other._currency != "") && (other._currency != _currency)) {
-    throw monetary_error("Can not compare two different currencies.");
-  }
-  double temp1 = (double)_unit + ((double)_centesimal / 100);
-  double temp2 = (double)other._unit + ((double)other._centesimal / 100);
+  checkComparisonObject(other, "<");
+  double temp1 = convertMoneyToSingle(*this);
+  double temp2 = convertMoneyToSingle(other);
   return temp1 < temp2;
 }
 
 bool Money::operator==(const Money& other) const
 {
-  if ((_currency != "") && (other._currency != "") && (other._currency != _currency)) {
-    throw monetary_error("Can not compare two different currencies.");
-  }
-  double temp1 = (double)_unit + ((double)_centesimal / 100);
-  double temp2 = (double)other._unit + ((double)other._centesimal / 100);
+  checkComparisonObject(other, "==");
+  double temp1 = convertMoneyToSingle(*this);
+  double temp2 = convertMoneyToSingle(other);
   return temp1 == temp2;
 }
 
