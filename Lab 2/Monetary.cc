@@ -118,19 +118,11 @@ bool Money::operator==(const Money& other) const
 
 bool Money::operator>(const Money& other) const
 {
-  bool one = (*this < other);
-  bool two = (*this == other);
-  if (one || two) {
-    return false;
-  }
-  else {
-    return true;
-  }
-
+  return !((*this < other) || (*this == other)); 
 }
 bool Money::operator<=(const Money& other) const
 {
-  return !(*this > other);
+  return (*this < other) || (*this == other);
 }
 bool Money::operator>=(const Money& other) const
 {
