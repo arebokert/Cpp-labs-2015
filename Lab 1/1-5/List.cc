@@ -5,11 +5,11 @@
 using namespace std;
 
 
-void swap (List_Node* first, List_Node* second){
+void swap (List_Node*& first, List_Node*& second){
   std::swap(first, second);
 }
 
-List_Node* copy(const List_Node* _head) {
+List_Node* copy(const List_Node* const & _head) {
   List_Node* list;
   if (_head == nullptr)
     list = nullptr;
@@ -24,14 +24,13 @@ List_Node* copy(const List_Node* _head) {
   return list;
 }
 
-void append(List_Node* _head, const string& name, int age)
+
+void append(List_Node*& _head, const string& name, int age)
 {
-  auto* p = new List_Node{ name, age, nullptr };
+  auto p = new List_Node{ name, age, nullptr };
   if (_head == nullptr)
     {
       _head = p;
-      cout << _head->name;
-      //cout << _head->name;
       return;
     }
 
@@ -45,36 +44,24 @@ void append(List_Node* _head, const string& name, int age)
   last->next = p;
 }
 
-void print(const List_Node* _head, ostream& stream)
+void print(const List_Node* const & _head, ostream& stream)
 {
   for (auto p = _head; p != nullptr; p = p->next)
     {
       stream << " -> " << p->name << '(' << p->age << ')';
-      //cout << " -> " << p->name << '(' << p->age << ')';
     }
   stream << "\n";
 }
 
-/*
-void _internal_reverse_print(const List_Node* node) {
-  if (node == nullptr) {
-    return;
-  }
-  _internal_reverse_print(node->next);
-  cout << " -> " << node->name << '(' << node->age << ')';
-}
-*/
-
-void print_reversed(const List_Node* _head, ostream& stream) {
+void print_reversed(const List_Node* const & _head, ostream& stream) {
   if (_head == nullptr) {
     return;
   }
   print_reversed(_head->next, stream);
   stream << " -> " << _head->name << '(' << _head->age << ')';
-  //cout << "\n";
 }
 
-void insert(List_Node* _head, const string& name, int age) {
+void insert(List_Node*& _head, const string& name, int age) {
   if (_head == nullptr)
     {
       auto p = new List_Node{ name, age, nullptr };
@@ -87,7 +74,7 @@ void insert(List_Node* _head, const string& name, int age) {
   }
 }
 
-void clear(List_Node* _head) {
+void clear(List_Node*& _head) {
   while(_head != nullptr)
     {
       List_Node* temp = _head->next;
@@ -96,7 +83,7 @@ void clear(List_Node* _head) {
     }
 }
 
-void reverse(List_Node* _head) {
+void reverse(List_Node*& _head) {
   struct List_Node* previous_node = nullptr;
   struct List_Node* temp_head = _head;
   struct List_Node* next_node;
@@ -110,7 +97,7 @@ void reverse(List_Node* _head) {
   _head = previous_node;
 }
 
-bool empty(const List_Node* _head) {
+bool empty(const List_Node* const & _head) {
   if (_head == nullptr) {
     return true;
   }

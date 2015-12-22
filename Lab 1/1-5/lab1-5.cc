@@ -14,7 +14,7 @@
 
 using namespace std;
 
-void build_lists(ifstream&, List_Node*, List_Node*);
+void build_lists(ifstream&, List_Node*&, List_Node*&);
 
 int main(int argc, char* argv[])
 {
@@ -42,16 +42,16 @@ int main(int argc, char* argv[])
 	cout << "Lista 2 är tom.\n";
       else
 	cout << "Lista 2 är inte tom.\n";
+    
       build_lists(input, list_1, list_2);
     }
   }
-	
   cout << "Lista 1 efter inläsning av namn:\n";
   print(list_1, cout);
   cout << "Lista 2 efter inläsning av namn:\n";
   print(list_2, cout);
 
-  /*cout << "Lista 1 utskriven i omvänd ordning:\n";
+  cout << "Lista 1 utskriven i omvänd ordning:\n";
   print_reversed(list_1, cout);
 
 	
@@ -101,19 +101,19 @@ int main(int argc, char* argv[])
     cout << "Lista 2 är inte tom.\n";
 
   cout << "Programmet avslutas.\n";
-	*/
+	
   return 0;
 }
 
 
 
-void build_lists(ifstream& input, List_Node* list_1, List_Node* list_2) {
+void build_lists(ifstream& input, List_Node*& list_1, List_Node*& list_2) {
   for (string line; getline(input, line); )
     {
       string name = line.substr(0, line.find(" "));
       int age = stoi(line.substr(line.find(" "), line.length()));
       append(list_2, name, age);
-      //insert(list_1, name, age);
+      insert(list_1, name, age);
     }
   input.close();
 }
