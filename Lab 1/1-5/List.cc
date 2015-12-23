@@ -14,9 +14,9 @@ List_Node* copy(const List_Node* const & _head) {
   if (_head == nullptr)
     list = nullptr;
   else {
-    list = new List_Node{ _head->name, _head->age, nullptr };
-    List_Node* iterator = list;
-    for (List_Node* temp_head = _head->next; temp_head != nullptr; temp_head = temp_head->next) {
+    list = new List_Node{ _head->name, _head->age, nullptr};
+    List_Node* iterator{list};
+    for (List_Node* temp_head{_head->next}; temp_head != nullptr; temp_head = temp_head->next) {
       iterator->next = new List_Node{ temp_head->name, temp_head->age, nullptr };
       iterator = iterator->next;
     }
@@ -77,16 +77,16 @@ void insert(List_Node*& _head, const string& name, int age) {
 void clear(List_Node*& _head) {
   while(_head != nullptr)
     {
-      List_Node* temp = _head->next;
+      List_Node* temp{_head->next};
       delete _head;
       _head = temp;
     }
 }
 
 void reverse(List_Node*& _head) {
-  struct List_Node* previous_node = nullptr;
-  struct List_Node* temp_head = _head;
-  struct List_Node* next_node;
+  List_Node* previous_node{nullptr};
+  List_Node* temp_head{_head};
+  List_Node* next_node{nullptr};
   while (temp_head != nullptr)
     {
       next_node = temp_head->next;
@@ -98,10 +98,5 @@ void reverse(List_Node*& _head) {
 }
 
 bool empty(const List_Node* const & _head) {
-  if (_head == nullptr) {
-    return true;
-  }
-  else {
-    return false;
-  }
+  return _head == nullptr;
 }
