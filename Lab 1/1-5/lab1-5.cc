@@ -108,10 +108,10 @@ int main(int argc, char* argv[])
 
 
 void build_lists(ifstream& input, List_Node*& list_1, List_Node*& list_2) {
-  for (string line; getline(input, line); )
+  string name{};
+  int age{0};
+  while (input >> name >> age)
     {
-      string name = line.substr(0, line.find(" "));
-      int age = stoi(line.substr(line.find(" "), line.length()));
       append(list_2, name, age);
       insert(list_1, name, age);
     }
