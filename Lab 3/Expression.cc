@@ -19,7 +19,14 @@ using namespace std;
  */
 long double Expression::evaluate() const
 {
-   return 0;  // ATT GÖRA!
+   if(empty())
+   {
+       throw expression_error("Expression is empty.");
+   } 
+   else
+   {
+       return _tree->evaluate();
+   } 
 }
 
 /*
@@ -27,7 +34,14 @@ long double Expression::evaluate() const
  */
 std::string Expression::get_postfix() const
 {
-   return string();  // ATT GÖRA!
+   if(empty())
+   {
+       throw expression_error("Expression is empty.");
+   }
+   else 
+   {
+       return _tree->get_postfix(); 
+   }
 }
 
 /*
@@ -35,31 +49,34 @@ std::string Expression::get_postfix() const
  */
 bool Expression::empty() const
 {
-   return false;  // ATT GÖRA!
+   return _tree == nullptr;
 }
 
 /*
  * print_tree()
  */
-void Expression::print_tree(std::ostream&) const
+void Expression::print_tree(std::ostream& o) const
 {
-   // ATT GÖRA!
+   if(!empty())
+   {
+       _tree->print(o, 2);
+   }
 }
 
 /*
  * swap(other)
  */
-void Expression::swap(Expression&)
+void Expression::swap(Expression& other)
 {
-   // ATT GÖRA!
+   std::swap(_tree, other._tree);
 }
 
 /*
  * swap(x, y)
  */
-void swap(Expression&, Expression&)
+void swap(Expression& first, Expression& second)
 {
-   // ATT GÖRA!
+   first.swap(second);
 }
 
 /*
@@ -67,8 +84,8 @@ void swap(Expression&, Expression&)
  */
 Expression make_expression(const string& infix);
 
-// Namrymden nedan innehåller intern kod för infix-till-postfix-omvandling
-// och generering av uttrycksträd. En anonym namnrymd begränsar användningen
+// Namrymden nedan innehï¿½ller intern kod fï¿½r infix-till-postfix-omvandling
+// och generering av uttryckstrï¿½d. En anonym namnrymd begrï¿½nsar anvï¿½ndningen
 // av medlemmarna till denna fil.
 namespace
 {
@@ -77,7 +94,7 @@ namespace
    using std::make_pair;
    using std::string;
 
-   // Teckenuppsättningar för operander. Används av make_expression_tree().
+   // Teckenuppsï¿½ttningar fï¿½r operander. Anvï¿½nds av make_expression_tree().
    const string letters{"abcdefghijklmnopqrstuvwxyz"};
    const string digits{"0123456789"};
    const string integer_chars{digits};
@@ -85,18 +102,18 @@ namespace
    const string variable_chars{letters};
    const string operand_chars{letters + digits + '.'};
 
-   // Tillåtna operatorer. Används av make_postfix() och make_expression_tree().
-   // Prioritetstabeller, en för inkommandeprioritet och en för stackprioritet. 
-   // Högre värde inom input_prio respektive stack_prio anger inbördes prioritetsordning.
-   // Högre värde i input_prio jämfört med motsvarande position i stack_prio innebär
-   // högerassociativitet, det motsatta vänsterassociativitet. Används av make_postfix(). 
+   // Tillï¿½tna operatorer. Anvï¿½nds av make_postfix() och make_expression_tree().
+   // Prioritetstabeller, en fï¿½r inkommandeprioritet och en fï¿½r stackprioritet. 
+   // Hï¿½gre vï¿½rde inom input_prio respektive stack_prio anger inbï¿½rdes prioritetsordning.
+   // Hï¿½gre vï¿½rde i input_prio jï¿½mfï¿½rt med motsvarande position i stack_prio innebï¿½r
+   // hï¿½gerassociativitet, det motsatta vï¿½nsterassociativitet. Anvï¿½nds av make_postfix(). 
    using priority_table = map<string, int>;
 
    const vector<string> operators{ "^", "*", "/", "+", "-", "=" };
    const priority_table input_priority{ {"^", 8}, {"*", 5}, {"/", 5}, {"+", 3}, {"-", 3}, {"=", 2} };
    const priority_table stack_priority{ {"^", 7}, {"*", 6}, {"/", 6}, {"+", 4}, {"-", 4}, {"=", 1} };
 
-   // Hjälpfunktioner för att kategorisera lexikala element.
+   // Hjï¿½lpfunktioner fï¿½r att kategorisera lexikala element.
    bool is_operator(char token)
    {
       return find(begin(operators), end(operators), string{token}) != end(operators);
@@ -127,8 +144,8 @@ namespace
       return token.find_first_not_of(letters) == string::npos;
    }
 
-   // format_infix tar en sträng med ett infixuttryck och formaterar med ett
-   // mellanrum mellan varje symbol; underlättar vid bearbetningen i make_postfix.
+   // format_infix tar en strï¿½ng med ett infixuttryck och formaterar med ett
+   // mellanrum mellan varje symbol; underlï¿½ttar vid bearbetningen i make_postfix.
    std::string format_infix(const std::string& infix)
    {
       auto bos = begin(infix);
@@ -139,11 +156,11 @@ namespace
       {
 	 if (is_operator(*it) || *it == '(' || *it == ')')
 	 {
-	    // Se till att det är ett mellanrum före en operator eller parentes
+	    // Se till att det ï¿½r ett mellanrum fï¿½re en operator eller parentes
 	    if (it != bos && *(it - 1) != ' ' && *(formated.end() - 1) != ' ')
 	       formated.append(1, ' ');
 	    formated.append(1, *it);
-	    // Se till att det är ett mellanrum efter en operator eller parentes
+	    // Se till att det ï¿½r ett mellanrum efter en operator eller parentes
 	    if ((it + 1) != eos && *(it + 1) != ' ')
 	       formated.append(1, ' ');
 	 }
@@ -158,7 +175,7 @@ namespace
       return formated;
    }
 
-   // make_postfix tar en infixsträng och returnerar motsvarande postfixsträng.
+   // make_postfix tar en infixstrï¿½ng och returnerar motsvarande postfixstrï¿½ng.
    std::string make_postfix(const std::string& infix)
    {
       using std::stack;
@@ -182,16 +199,14 @@ namespace
 	 {
 	    if (!last_was_operand || postfix.empty() || previous_token == "(")
 	    {
-	       std::cerr << "operator där operand förväntades\n";
-	       exit(EXIT_FAILURE);
+	       throw expression_error("Operator where operand expected.");
 	    }
 
 	    if (token == "=")
 	    {
 	       if (assignment)
 	       {
-		  std::cerr << "multipel tilldelning";
-		  exit(EXIT_FAILURE);
+		  throw expression_error("Multiple assignment.");
 	       }
 	       else
 	       {
@@ -218,14 +233,12 @@ namespace
 	 {
 	    if (paren_count == 0)
 	    {
-	       std::cerr << "vänsterparentes saknas\n";
-	       exit(EXIT_FAILURE);
+	       throw expression_error("Left parentheses missing.");
 	    }
 
 	    if (previous_token == "(" && !postfix.empty())
 	    {
-	       std::cerr << "tom parentes\n";
-	       exit(EXIT_FAILURE);
+	       throw expression_error("Empty parentheses.");
 	    }
 
 	    while (!operator_stack.empty() && operator_stack.top() != "(")
@@ -236,10 +249,9 @@ namespace
 
 	    if (operator_stack.empty())
 	    {
-	       std::cerr << "högerparentes saknar matchande vänsterparentes\n";
-	       exit(EXIT_FAILURE);
+	       throw expression_error("Right parentheses missing matching left parentheses.");
 	    }
-	    // Det finns en vänsterparentes på stacken
+	    // Det finns en vï¿½nsterparentes pï¿½ stacken
 	    operator_stack.pop();
 	    --paren_count;
 	 }
@@ -247,8 +259,7 @@ namespace
 	 {
 	    if (last_was_operand || previous_token == ")")
 	    {
-	       std::cerr << "operand där operator förväntades\n";
-	       exit(EXIT_FAILURE);
+	        throw expression_error("Operand where operator expected.");
 	    }
 
 	    postfix += token + ' ';
@@ -256,8 +267,7 @@ namespace
 	 }
 	 else
 	 {
-	    std::cerr << "otillåten symbol\n";
-	    exit(EXIT_FAILURE);
+	    throw expression_error("Symbol not allowed.");
 	 }
 
 	 previous_token = token;
@@ -265,20 +275,17 @@ namespace
 
       if (postfix == "")
       {
-	 std::cerr << "tomt infixuttryck!\n";
-	 exit(EXIT_FAILURE);
+	 throw expression_error("Empty infix.");
       }
 
       if (!last_was_operand && !postfix.empty())
       {
-	 std::cerr << "operator avslutar\n";
-	 exit(EXIT_FAILURE);
+	 throw expression_error("Operator ends.");
       }
 
       if (paren_count > 0)
       {
-	 std::cerr << "högerparentes saknas\n";
-	 exit(EXIT_FAILURE);
+	 throw expression_error("Right parentheses missing.");
       }
 
       while (!operator_stack.empty())
@@ -291,12 +298,13 @@ namespace
       {
 	 postfix.erase(postfix.size() - 1);
       }
+      
 
       return postfix;
    }
 
-   // make_expression_tree tar en postfixsträng och returnerar ett motsvarande 
-   // länkat träd av Expression_Tree-noder.
+   // make_expression_tree tar en postfixstrï¿½ng och returnerar ett motsvarande 
+   // lï¿½nkat trï¿½d av Expression_Tree-noder.
    Expression_Tree* make_expression_tree(const std::string& postfix)
    {
       using std::stack;
@@ -307,24 +315,25 @@ namespace
       string                  token;
       istringstream           ps{postfix};
 
+      Expression_Tree* lhs;
+      Expression_Tree* rhs;
+      try{
       while (ps >> token)
       {
 	 if (is_operator(token))
 	 {
 	    if (tree_stack.empty()) 
 	    {
-	       std::cerr << "felaktig postfix\n";
-	       exit(EXIT_FAILURE);
+	       throw expression_error("Invalid postfix.");
 	    }
-	    Expression_Tree* rhs{tree_stack.top()};
+	    rhs = tree_stack.top();
 	    tree_stack.pop();
 
 	    if (tree_stack.empty()) 
 	    {
-	       std::cerr << "felaktig postfix\n";
-	       exit(EXIT_FAILURE);
+	       throw expression_error("Invalid postfix.");
 	    }
-	    Expression_Tree* lhs{tree_stack.top()};
+	    lhs = tree_stack.top();
 	    tree_stack.pop();
 
 	    if (token == "^")
@@ -354,7 +363,7 @@ namespace
 	 }
 	 else if (is_integer(token))
 	 {
-	    tree_stack.push(new Integer{std::stoll(token.c_str())});
+	    tree_stack.push(new Integer{(long int)std::stoll(token.c_str())});
 	 }
 	 else if (is_real(token))
 	 {
@@ -366,16 +375,15 @@ namespace
 	 }
 	 else
 	 {
-	    std::cerr << "felaktig postfix\n";
-	    exit(EXIT_FAILURE);
+
+        throw expression_error("Invalid postfix.");
 	 }
       }
-      // Det ska bara finnas ett träd på stacken om korrekt postfix.
+      // Det ska bara finnas ett trï¿½d pï¿½ stacken om korrekt postfix.
 
       if (tree_stack.empty())
       {
-	 std::cerr << "ingen postfix given\n";
-	 exit(EXIT_FAILURE);
+	 throw expression_error("No postfix available.");
       }
 
       if (tree_stack.size() > 1)
@@ -385,11 +393,27 @@ namespace
 	    delete tree_stack.top();
 	    tree_stack.pop();
 	 }
-	 std::cerr << "felaktig postfix\n";
-	 exit(EXIT_FAILURE);
+	 throw expression_error("Invalid postfix.");
       }
+      }catch(...){
+      while(!tree_stack.empty())
+	{
+	  delete tree_stack.top();
+	  tree_stack.pop();
+	}
+    if(rhs != nullptr)
+	{
+	  delete rhs;
+	}
+      if(lhs != nullptr)
+	{
+	  delete lhs;
+	}
+      throw;
+    }
+      
 
-      // Returnera trädet.
+      // Returnera trï¿½det.
       return tree_stack.top();
    }
 } // namespace

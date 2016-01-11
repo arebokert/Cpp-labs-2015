@@ -16,19 +16,32 @@
 /**
  * Expression: Klass för att representera ett enkelt aritmetiskt uttryck.
  */
+ 
+class expression_error : public std::logic_error
+{
+ public:
+  using logic_error::logic_error;
+};
+ 
 class Expression
 {
 public:
    // OBSERVERA: DETTA ÄR ENDAST KODSKELETT - MODIFIERA OCH KOMPLETTERA!
 
-   Expression(class Expression_Tree* = nullptr) {}
-
+   Expression(class Expression_Tree* tree = nullptr) : _tree{tree} {}
+   //Expression(const Expression&);
+   //Expression(Expression&&) noexcept;
    long double evaluate() const;
    std::string get_postfix() const;
    bool        empty() const;
    void        print_tree(std::ostream&) const;
    void        swap(Expression&);
+   ~Expression() = default;
+protected:
+   Expression_Tree* _tree;
 };
+
+
 
 /**
  * swap: Byter innehåll på två Expression-objekt.
