@@ -25,20 +25,18 @@ class expression_error : public std::logic_error
  
 class Expression
 {
-public:
-   // OBSERVERA: DETTA ÄR ENDAST KODSKELETT - MODIFIERA OCH KOMPLETTERA!
+ public:
+  // OBSERVERA: DETTA ÄR ENDAST KODSKELETT - MODIFIERA OCH KOMPLETTERA!
 
-   Expression(class Expression_Tree* tree = nullptr) : _tree{tree} {}
-   //Expression(const Expression&);
-   //Expression(Expression&&) noexcept;
-   long double evaluate() const;
-   std::string get_postfix() const;
-   bool        empty() const;
-   void        print_tree(std::ostream&) const;
-   void        swap(Expression&);
-   ~Expression() = default;
-protected:
-   Expression_Tree* _tree;
+ Expression(class Expression_Tree* tree = nullptr) : _tree{tree} {}
+  long double evaluate() const;
+  std::string get_postfix() const;
+  bool        empty() const;
+  void        print_tree(std::ostream&) const;
+  void        swap(Expression&);
+  ~Expression() = default;
+ protected:
+  Expression_Tree* _tree;
 };
 
 

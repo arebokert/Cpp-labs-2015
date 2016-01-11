@@ -19,23 +19,23 @@ void
 Calculator::
 run()
 {
-   cout << "Välkommen till Kalkylatorn!\n\n";
-   print_help();
+  cout << "Välkommen till Kalkylatorn!\n\n";
+  print_help();
 
-   do 
-   {
+  do 
+    {
       try 
-      {
-	 get_command();
-	 if (valid_command()) execute_command();
-      }
+	{
+	  get_command();
+	  if (valid_command()) execute_command();
+	}
       catch (const exception& e) 
-      {
-	 cout << e.what() << '\n';
-      }
+	{
+	  cout << e.what() << '\n';
+	}
       // Oförutsedda undantag avbryter programkörningen, via main().
-   }
-   while (command_ != 'S');
+    }
+  while (command_ != 'S');
 }
 
 /**
@@ -45,12 +45,12 @@ void
 Calculator::
 print_help()
 {
-   cout << "  H, ?  Skriv ut denna information\n";
-   cout << "  U     Mata in ett nytt uttryck\n";
-   cout << "  B     Beräkna aktuellt uttryck\n";
-   cout << "  P     Visa aktuellt uttryck som postfix\n";
-   cout << "  T     Visa aktuellt uttryck som träd\n";
-   cout << "  S     Avsluta kalkylatorn\n";
+  cout << "  H, ?  Skriv ut denna information\n";
+  cout << "  U     Mata in ett nytt uttryck\n";
+  cout << "  B     Beräkna aktuellt uttryck\n";
+  cout << "  P     Visa aktuellt uttryck som postfix\n";
+  cout << "  T     Visa aktuellt uttryck som träd\n";
+  cout << "  S     Avsluta kalkylatorn\n";
 }
 
 /**
@@ -62,9 +62,9 @@ void
 Calculator::
 get_command()
 {
-   cout << ">> ";
-   cin >> command_;
-   command_ = toupper(command_);
+  cout << ">> ";
+  cin >> command_;
+  command_ = toupper(command_);
 }
 
 /**
@@ -76,12 +76,12 @@ bool
 Calculator::
 valid_command() const
 {
-   if (valid_cmds_.find(command_) == string::npos)
-   {
+  if (valid_cmds_.find(command_) == string::npos)
+    {
       cout << "Otillåtet kommando: " << command_ << "\n";
       return false;
-   }
-   return true;
+    }
+  return true;
 }
 
 /**
@@ -93,20 +93,20 @@ void
 Calculator::
 execute_command()
 {
-   if (command_ == 'H' || command_ == '?')
-      print_help();
-   else if (command_ == 'U')
-      read_expression(cin);
-   else if (command_ == 'B')
-      cout << current_expression_.evaluate() << "\n";
-   else if (command_ == 'P')
-      cout << current_expression_.get_postfix() << "\n";
-   else if (command_ == 'T')
-      current_expression_.print_tree(cout);
-   else if (command_ == 'S')
-      cout << "Kalkylatorn avlutas, välkommen åter!\n";
-   else
-      cout << "Detta ska inte hända!\n";
+  if (command_ == 'H' || command_ == '?')
+    print_help();
+  else if (command_ == 'U')
+    read_expression(cin);
+  else if (command_ == 'B')
+    cout << current_expression_.evaluate() << "\n";
+  else if (command_ == 'P')
+    cout << current_expression_.get_postfix() << "\n";
+  else if (command_ == 'T')
+    current_expression_.print_tree(cout);
+  else if (command_ == 'S')
+    cout << "Kalkylatorn avlutas, välkommen åter!\n";
+  else
+    cout << "Detta ska inte hända!\n";
 }
 
 /**
@@ -118,16 +118,16 @@ void
 Calculator::
 read_expression(istream& is)
 {
-   string infix;
+  string infix;
 
-   is >> ws;
+  is >> ws;
 
-   if (getline(is, infix))
-   {
+  if (getline(is, infix))
+    {
       current_expression_ = make_expression(infix);
-   }
-   else
-   {
+    }
+  else
+    {
       cout << "Felaktig inmatning!\n";
-   }
+    }
 }

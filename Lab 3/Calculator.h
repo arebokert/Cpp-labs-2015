@@ -17,29 +17,29 @@
  */
 class Calculator
 {
-public:
-   Calculator() = default;
-   ~Calculator() = default;
+ public:
+  Calculator() = default;
+  ~Calculator() = default;
 
-   Calculator(const Calculator&) = delete;
-   Calculator& operator=(const Calculator&) = delete;
+  Calculator(const Calculator&) = delete;
+  Calculator& operator=(const Calculator&) = delete;
 
-   void run();
+  void run();
 
-private:
-   static const std::string valid_cmds_;
+ private:
+  static const std::string valid_cmds_;
 
-   Expression current_expression_;
+  Expression current_expression_;
 
-   char command_;
+  char command_;
 
-   static void print_help();
+  static void print_help();
 
-   void get_command();
-   bool valid_command() const;
-   void execute_command();
+  void get_command();
+  bool valid_command() const;
+  void execute_command();
 
-   void read_expression(std::istream&);
+  void read_expression(std::istream&);
 };
 
 #endif
