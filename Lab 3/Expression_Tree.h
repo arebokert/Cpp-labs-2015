@@ -30,7 +30,7 @@ class expression_tree_error : public std::logic_error
 class Expression_Tree
 {
  public:
- Expression_Tree& operator=(const Expression_Tree&) = delete;
+  Expression_Tree& operator=(const Expression_Tree&) = delete;
   virtual long double evaluate() const = 0;
   virtual std::string get_postfix() const = 0;
   virtual std::string str() const = 0;
@@ -47,7 +47,7 @@ class Binary_Operator : public Expression_Tree
  Binary_Operator(Expression_Tree* lhs, Expression_Tree* rhs) : _lhs{lhs}, _rhs{rhs}{};
   Binary_Operator(const Binary_Operator&);
  public:
- Binary_Operator& operator=(const Binary_Operator&) = delete;
+  Binary_Operator& operator=(const Binary_Operator&) = delete;
   ~Binary_Operator();
   std::string get_postfix() const override;
   void print(ostream&, int) const override;
@@ -59,7 +59,7 @@ class Operand : public Expression_Tree
   Operand() = default;
   Operand(const Operand&) = default;
  public:
- Operand& operator=(const Operand&) = delete;  
+  Operand& operator=(const Operand&) = delete;  
   ~Operand() = default;
   std::string get_postfix() const override;
   void print(std::ostream&, int) const override;
@@ -68,7 +68,7 @@ class Operand : public Expression_Tree
 class Assign : public Binary_Operator
 { 
  public:
- Assign& operator=(const Assign&) = delete;
+  Assign& operator=(const Assign&) = delete;
   ~Assign() = default;
  Assign(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator(lhs, rhs) {};
   long double evaluate() const override;
@@ -79,7 +79,7 @@ class Assign : public Binary_Operator
 class Plus : public Binary_Operator
 { 
  public:
- Plus& operator=(const Plus&) = delete;
+  Plus& operator=(const Plus&) = delete;
   ~Plus() = default;
  Plus(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator(lhs, rhs) {};
   long double evaluate() const override;
@@ -91,7 +91,7 @@ class Plus : public Binary_Operator
 class Minus : public Binary_Operator 
 {
  public:
- Minus& operator=(const Minus&) = delete;
+  Minus& operator=(const Minus&) = delete;
   ~Minus() = default;
  Minus(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator(lhs, rhs) {};
   long double evaluate() const override;
@@ -102,7 +102,7 @@ class Minus : public Binary_Operator
 class Times : public Binary_Operator
 {
  public:
- Times& operator=(const Times&) = delete;
+  Times& operator=(const Times&) = delete;
   ~Times() = default;
  Times(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator(lhs, rhs) {};
   long double evaluate() const override;
@@ -113,7 +113,7 @@ class Times : public Binary_Operator
 class Divide : public Binary_Operator
 {
  public:
- Divide& operator=(const Divide&) = delete;
+  Divide& operator=(const Divide&) = delete;
   ~Divide() = default;
  Divide(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator(lhs, rhs) {};
   long double evaluate() const override;
@@ -124,7 +124,7 @@ class Divide : public Binary_Operator
 class Power: public Binary_Operator
 {
  public:
- Power& operator=(const Power&) = delete;
+  Power& operator=(const Power&) = delete;
   ~Power() = default;
  Power(Expression_Tree* lhs, Expression_Tree* rhs) : Binary_Operator(lhs, rhs) {};
   long double evaluate() const override;
@@ -137,7 +137,7 @@ class Integer : public Operand
  private:
   long int _internalint;
  public:
- Integer& operator=(const Integer&) = delete;
+  Integer& operator=(const Integer&) = delete;
   ~Integer() = default;
  Integer(const long int integer) : _internalint{integer} {};
   long double evaluate() const override;
@@ -150,7 +150,7 @@ class Real : public Operand
  private:
   long double _internaldouble;
  public:
- Real& operator=(const Real&) = delete;
+  Real& operator=(const Real&) = delete;
   ~Real() = default;
  Real(const long double double_in) : _internaldouble{double_in} {};
   long double evaluate() const override;
@@ -164,7 +164,7 @@ class Variable : public Operand
   std::string _variable;
   long double _value;
  public:
- Variable& operator=(const Variable&) = delete;
+  Variable& operator=(const Variable&) = delete;
   ~Variable() = default;
  Variable(const std::string& variable) : _variable{variable} {};
   long double evaluate() const override;

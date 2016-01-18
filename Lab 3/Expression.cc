@@ -17,7 +17,7 @@ using namespace std;
 
 Expression::~Expression()
 {
-    delete _tree;
+  delete _tree;
 }
 
 
