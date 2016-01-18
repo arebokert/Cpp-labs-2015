@@ -14,6 +14,41 @@
 #include <vector>
 using namespace std;
 
+
+Expression::~Expression()
+{
+    delete _tree;
+}
+
+
+Expression& Expression::operator=(const Expression& expression) noexcept
+{
+  Expression(expression).swap(*this);
+  return *this;
+}
+
+Expression& Expression::operator=(Expression&& expression) noexcept
+{
+  swap(expression);
+  return *this;
+}
+
+Expression::Expression(Expression&& expression) noexcept
+{
+  if(!expression.empty()){
+    swap(expression);
+  }
+}
+
+Expression::Expression(const Expression& expression)
+{
+  if(!expression.empty()){
+    _tree = expression._tree->clone();
+  }
+}
+
+
+
 /*
  * evaluate()
  */
@@ -66,7 +101,7 @@ void Expression::print_tree(std::ostream& o) const
 /*
  * swap(other)
  */
-void Expression::swap(Expression& other)
+void Expression::swap(Expression& other) noexcept
 {
   std::swap(_tree, other._tree);
 }
@@ -74,7 +109,7 @@ void Expression::swap(Expression& other)
 /*
  * swap(x, y)
  */
-void swap(Expression& first, Expression& second)
+void swap(Expression& first, Expression& second) noexcept
 {
   first.swap(second);
 }

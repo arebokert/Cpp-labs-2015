@@ -65,7 +65,7 @@ string Assign::str() const
   return "=";
 }
 
-Expression_Tree* Assign::clone() const
+Assign* Assign::clone() const
 {
   return new Assign{_lhs, _rhs};
 }
@@ -80,7 +80,7 @@ string Plus::str() const
   return "+";
 }
 
-Expression_Tree* Plus::clone() const
+Plus* Plus::clone() const
 {
   return new Plus{_lhs, _rhs};
 }
@@ -95,7 +95,7 @@ string Minus::str() const
   return "-";
 }
 
-Expression_Tree* Minus::clone() const
+Minus* Minus::clone() const
 {
   return new Minus{_lhs, _rhs};
 }
@@ -110,7 +110,7 @@ string Times::str() const
   return "*";
 }
 
-Expression_Tree* Times::clone() const
+Times* Times::clone() const
 {
   return new Times{_lhs, _rhs};
 }
@@ -131,7 +131,7 @@ string Divide::str() const
   return "/";
 }
 
-Expression_Tree* Divide::clone() const
+Divide* Divide::clone() const
 {
   return new Divide{_lhs, _rhs};
 }
@@ -146,7 +146,7 @@ string Power::str() const
   return "^";
 }
 
-Expression_Tree* Power::clone() const
+Power* Power::clone() const
 {
   return new Power{_lhs, _rhs};
 }
@@ -161,7 +161,7 @@ string Integer::str() const
   return to_string(_internalint);
 }
 
-Expression_Tree* Integer::clone() const
+Integer* Integer::clone() const
 {
   return new Integer{_internalint};
 }
@@ -178,7 +178,7 @@ string Real::str() const
   return temp_string.str();
 }
 
-Expression_Tree* Real::clone() const
+Real* Real::clone() const
 {
   return new Real{_internaldouble};
 }
@@ -193,7 +193,7 @@ string Variable::str() const
   return _variable;
 }
 
-Expression_Tree* Variable::clone() const
+Variable* Variable::clone() const
 {
   return new Variable{_variable};
 }

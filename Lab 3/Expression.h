@@ -29,12 +29,16 @@ class Expression
   // OBSERVERA: DETTA ÄR ENDAST KODSKELETT - MODIFIERA OCH KOMPLETTERA!
 
  Expression(class Expression_Tree* tree = nullptr) : _tree{tree} {}
+  Expression(Expression&&) noexcept;
+  Expression(const Expression&);
   long double evaluate() const;
   std::string get_postfix() const;
   bool        empty() const;
   void        print_tree(std::ostream&) const;
-  void        swap(Expression&);
-  ~Expression() = default;
+  void        swap(Expression&) noexcept;
+  Expression& operator=(const Expression&) noexcept;
+  Expression& operator=(Expression&&) noexcept;
+  ~Expression();
  protected:
   Expression_Tree* _tree;
 };
@@ -44,7 +48,7 @@ class Expression
 /**
  * swap: Byter innehåll på två Expression-objekt.
  */
-void swap(Expression&, Expression&);
+void swap(Expression&, Expression&) noexcept;
 
 /**
  * make_expression: Hjälpfunktion för att skapa ett Expression-objekt, givet

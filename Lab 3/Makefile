@@ -5,7 +5,7 @@ CCFLAGS  = -g -std=c++11 -Wpedantic -Wall -Wextra -Werror
 
 KALKYLATOR = kalkylator.o Calculator.o Expression_Tree.o Expression.o
 EXPRESSION_TREE_TEST = Expression_Tree.o expression_tree-test.o
-EXPRESSION_TEST = expression_test.o Expression_Tree.o Expression.o
+EXPRESSION_TEST = expression-test.o Expression_Tree.o Expression.o
 
 all: expression_tree-test kalkylator expression_test
 
@@ -33,8 +33,8 @@ Expression.o: Expression.h Expression.cc
 expression_tree-test.o: expression_tree-test.cc Expression_Tree.h
 	$(CC) $(CCFLAGS) -c expression_tree-test.cc
 
-expression_test.o: expression_test.cc Expression_Tree.h Expression.h
-	$(CC) $(CCFLAGS) -c expression_test.cc
+expression-test.o: expression-test.cc Expression_Tree.h Expression.h
+	$(CC) $(CCFLAGS) -c expression-test.cc
 
 clean:
 	@ \rm -rf *.o *.gch core
