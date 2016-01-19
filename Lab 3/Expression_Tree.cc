@@ -17,7 +17,7 @@ Binary_Operator::~Binary_Operator()
   delete _rhs;
 }
 
-Binary_Operator::Binary_Operator(const Binary_Operator& op)
+Binary_Operator::Binary_Operator(const Binary_Operator& op) : Expression_Tree(op)
 {
     
   _lhs = op._lhs->clone();

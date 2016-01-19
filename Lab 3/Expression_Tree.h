@@ -19,7 +19,6 @@
 /*
  * Expression_Tree: Abstrakt, polymorf basklass för alla trädnodklasser.
  */
-using namespace std;
 
 class expression_tree_error : public std::logic_error
 {
@@ -29,12 +28,15 @@ class expression_tree_error : public std::logic_error
 
 class Expression_Tree
 {
+ protected:
+  Expression_Tree(const Expression_Tree&) = default;
+  Expression_Tree(){}
  public:
   Expression_Tree& operator=(const Expression_Tree&) = delete;
   virtual long double evaluate() const = 0;
   virtual std::string get_postfix() const = 0;
   virtual std::string str() const = 0;
-  virtual void print(ostream&, int) const = 0;
+  virtual void print(std::ostream&, int) const = 0;
   virtual Expression_Tree* clone() const = 0;
   virtual ~Expression_Tree() = default;
 };
@@ -44,13 +46,13 @@ class Binary_Operator : public Expression_Tree
  protected:
   Expression_Tree* _lhs;
   Expression_Tree* _rhs;
- Binary_Operator(Expression_Tree* lhs, Expression_Tree* rhs) : _lhs{lhs}, _rhs{rhs}{};
+  Binary_Operator(Expression_Tree* lhs, Expression_Tree* rhs) : _lhs{lhs}, _rhs{rhs}{};
   Binary_Operator(const Binary_Operator&);
  public:
   Binary_Operator& operator=(const Binary_Operator&) = delete;
   ~Binary_Operator();
   std::string get_postfix() const override;
-  void print(ostream&, int) const override;
+  void print(std::ostream&, int) const override;
 };
 
 class Operand : public Expression_Tree
@@ -67,6 +69,8 @@ class Operand : public Expression_Tree
 
 class Assign : public Binary_Operator
 { 
+ private:
+  Assign(const Assign&) = default;
  public:
   Assign& operator=(const Assign&) = delete;
   ~Assign() = default;
@@ -78,6 +82,8 @@ class Assign : public Binary_Operator
 
 class Plus : public Binary_Operator
 { 
+ private:
+  Plus(const Plus&) = default;
  public:
   Plus& operator=(const Plus&) = delete;
   ~Plus() = default;
@@ -90,6 +96,8 @@ class Plus : public Binary_Operator
 
 class Minus : public Binary_Operator 
 {
+ private:
+  Minus(const Minus&) = default;
  public:
   Minus& operator=(const Minus&) = delete;
   ~Minus() = default;
@@ -101,6 +109,8 @@ class Minus : public Binary_Operator
 
 class Times : public Binary_Operator
 {
+ private:
+  Times(const Times&) = default;
  public:
   Times& operator=(const Times&) = delete;
   ~Times() = default;
@@ -112,6 +122,8 @@ class Times : public Binary_Operator
 
 class Divide : public Binary_Operator
 {
+ private:
+  Divide(const Divide&) = default;
  public:
   Divide& operator=(const Divide&) = delete;
   ~Divide() = default;
@@ -123,6 +135,8 @@ class Divide : public Binary_Operator
 
 class Power: public Binary_Operator
 {
+ private:
+  Power(const Power&) = default;
  public:
   Power& operator=(const Power&) = delete;
   ~Power() = default;
@@ -135,6 +149,7 @@ class Power: public Binary_Operator
 class Integer : public Operand
 {
  private:
+  Integer(const Integer&) = default;
   long int _internalint;
  public:
   Integer& operator=(const Integer&) = delete;
@@ -148,6 +163,7 @@ class Integer : public Operand
 class Real : public Operand
 {
  private:
+  Real(const Real&) = default;
   long double _internaldouble;
  public:
   Real& operator=(const Real&) = delete;
@@ -161,6 +177,7 @@ class Real : public Operand
 class Variable : public Operand
 {
  private:
+  Variable(const Variable&) = default;
   std::string _variable;
   long double _value;
  public:

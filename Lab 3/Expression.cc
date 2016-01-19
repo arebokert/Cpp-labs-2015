@@ -21,13 +21,13 @@ Expression::~Expression()
 }
 
 
-Expression& Expression::operator=(const Expression& expression) noexcept
+Expression& Expression::operator=(const Expression& expression) & noexcept
 {
   Expression(expression).swap(*this);
   return *this;
 }
 
-Expression& Expression::operator=(Expression&& expression) noexcept
+Expression& Expression::operator=(Expression&& expression) & noexcept
 {
   swap(expression);
   return *this;

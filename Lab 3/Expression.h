@@ -36,8 +36,8 @@ class Expression
   bool        empty() const;
   void        print_tree(std::ostream&) const;
   void        swap(Expression&) noexcept;
-  Expression& operator=(const Expression&) noexcept;
-  Expression& operator=(Expression&&) noexcept;
+  Expression& operator=(const Expression&) & noexcept;
+  Expression& operator=(Expression&&) & noexcept;
   ~Expression();
  protected:
   Expression_Tree* _tree;
