@@ -46,7 +46,7 @@ class Binary_Operator : public Expression_Tree
  protected:
   Expression_Tree* _lhs;
   Expression_Tree* _rhs;
-  Binary_Operator(Expression_Tree* lhs, Expression_Tree* rhs) : _lhs{lhs}, _rhs{rhs}{};
+ Binary_Operator(Expression_Tree* lhs, Expression_Tree* rhs) : _lhs{lhs}, _rhs{rhs}{};
   Binary_Operator(const Binary_Operator&);
  public:
   Binary_Operator& operator=(const Binary_Operator&) = delete;
